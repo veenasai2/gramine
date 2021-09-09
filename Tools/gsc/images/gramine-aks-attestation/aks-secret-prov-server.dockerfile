@@ -20,7 +20,7 @@
 #         $ docker push <dockerhubusername>/<aks-secret-prov-server-img>
 #
 # STEP 5: Deploy <aks-secret-prov-server-img> in AKS confidential compute cluster
-#         Reference deployment file: 
+#         Reference deployment file:
 #         gsc/images/gramine-aks-attestation/aks-secret-prov-server-deployment.yaml
 #
 # NOTE:  Server can be deployed at a non-confidential compute node as well. However, in that case
