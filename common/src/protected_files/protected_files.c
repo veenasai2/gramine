@@ -842,7 +842,7 @@ static bool ipf_init_existing_file(pf_context_t* pf, const char* path) {
     }
 
     DEBUG_PF("data size %lu", pf->encrypted_part_plain.size);
-
+/*
     if (path) {
         size_t path_len = strlen(pf->encrypted_part_plain.path);
         if (path_len != strlen(path)
@@ -851,7 +851,30 @@ static bool ipf_init_existing_file(pf_context_t* pf, const char* path) {
             return false;
         }
     }
+*/
+    if (path) {
 
+        size_t path_len = strlen(pf->encrypted_part_plain.path);
+
+        if (path_len != strlen(path)
+
+                || memcmp(path, pf->encrypted_part_plain.path, path_len) != 0) {
+
+            pf->last_error = PF_STATUS_INVALID_PATH;
+
+            DEBUG_PF("jk1 ipf_init_existing_file: path_len=%lu, strlen(path)=%lu, path=%s, pf->encrypted_part_plain.path=%s",
+
+         path_len, strlen(path), path, pf->encrypted_part_plain.path);
+
+            return false;
+
+        }
+
+        DEBUG_PF("jk2 ipf_init_existing_file: path_len=%lu, strlen(path)=%lu, path=%s, pf->encrypted_part_plain.path=%s",
+
+         path_len, strlen(path), path, pf->encrypted_part_plain.path);
+
+    }
     if (pf->encrypted_part_plain.size > MD_USER_DATA_SIZE) {
         // read the root node of the mht
         if (!ipf_read_node(pf, pf->file, /*node_number=*/1, &pf->root_mht.encrypted.cipher,
